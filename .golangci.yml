@@ -2,6 +2,7 @@ linters:
   enable-all: true
   disable:
     - deadcode # deprecated
+    - execinquery # he's wrong
     - exhaustivestruct
     - exhaustruct
     - gofmt
@@ -11,6 +12,7 @@ linters:
     - gci
     - ifshort # deprecated
     - interfacer # archived
+    - lll
     - maligned # archived
     - nosnakecase # deprecated
     - rowserrcheck # is disabled because of generics

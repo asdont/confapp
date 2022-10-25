@@ -88,6 +88,7 @@ func V1AddNewVersionConfig(tools *app.Tools) gin.HandlerFunc {
 
 func mergeParameters(params, paramsLatestVersion map[string]string) error {
 	duplicateCounter := 0
+
 	for param, value := range params {
 		if val, exist := paramsLatestVersion[param]; exist && value == val {
 			duplicateCounter++
