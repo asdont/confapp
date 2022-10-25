@@ -1,0 +1,43 @@
+linters:
+  enable-all: true
+  disable:
+    - deadcode # deprecated
+    - exhaustivestruct
+    - exhaustruct
+    - gofmt
+    - goimports
+    - golint # archived
+    - gofumpt # goland conflict
+    - gci
+    - ifshort # deprecated
+    - interfacer # archived
+    - maligned # archived
+    - nosnakecase # deprecated
+    - rowserrcheck # is disabled because of generics
+    - scopelint # archived
+    - sqlclosecheck # is disabled because of generics
+    - structcheck # deprecated
+    - varcheck # deprecated
+    - varnamelen
+    - wastedassign # is disabled because of generics
+
+run:
+  skip-files:
+    - "_test\\.go$"
+
+linters-settings:
+  godot:
+    exclude:
+      - "@.*"
+
+  funlen:
+    lines: -1
+    statements: 50
+
+  ireturn:
+    allow:
+      - anon
+      - error
+      - empty
+      - stdlib
+      - "(or|er)$"

@@ -1,0 +1,231 @@
+basePath: /api
+definitions:
+  handler.HTTPStatus:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+      version:
+        type: integer
+    type: object
+host: 127.0.0.1:22952
+info:
+  contact:
+    email: example@mail.ru
+    name: Company
+    url: https://example.ru/
+  title: API ConfApp
+  version: "1.0"
+paths:
+  /v1/config:
+    delete:
+      parameters:
+      - description: Название сервиса удаляемого конфига
+        in: query
+        name: service
+        required: true
+        type: string
+      - description: Номер версии
+        in: query
+        name: v
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: удалить версию конфига по названию сервиса(помечает удалённым, удаляет
+        через 90 дней)
+      tags:
+      - delete
+    get:
+      parameters:
+      - description: Название сервиса удаляемого конфига
+        in: query
+        name: service
+        required: true
+        type: string
+      - description: Номер версии
+        in: query
+        name: v
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: получить конфиг по названию сервиса и номеру версии конфига
+      tags:
+      - get
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Заменить кавычки на двойные - {''service'': ''managed-k8s'',
+          ''data'': [{''key1'': ''value1''}, {''key2'': ''value2''}]}'
+        in: body
+        name: data
+        schema:
+          type: primitive
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: создать конфиг для нового сервиса
+      tags:
+      - create
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Заменить кавычки на двойные - {''service'': ''managed-k8s'',
+          ''v'': 224, ''data'': [{''key1'': ''value1-1''}]}'
+        in: body
+        name: data
+        schema:
+          type: primitive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: обновить одну версию конфига по названию сервиса и номеру версии
+      tags:
+      - update
+  /v1/config/any:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Заменить кавычки на двойные - {''service'': ''managed-k8s'',
+          ''data'': [{''key1'': ''changed_value''}]}'
+        in: body
+        name: data
+        schema:
+          type: primitive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: обновить и/или добавить новые поля во все версии конфига сервиса
+      tags:
+      - update
+  /v1/config/update:
+    post:
+      consumes:
+      - application/json
+      description: Создаёт копию последней версии с новыми и/или измененными параметрами,
+        под новым номером версии
+      parameters:
+      - description: 'Заменить кавычки на двойные - {''service'': ''managed-k8s'',
+          ''data'': [{''key3'': ''value3''}]}'
+        in: body
+        name: data
+        schema:
+          type: primitive
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: обновить последний конфиг
+      tags:
+      - create
+  /v1/service:
+    delete:
+      parameters:
+      - description: Имя удаляемого сервиса
+        in: query
+        name: service
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.HTTPStatus'
+      summary: удалить сервис по названию(помечает удалёнными все версии, удаляет
+        через 90 дней)
+      tags:
+      - delete
+schemes:
+- http
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

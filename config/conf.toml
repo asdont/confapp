@@ -1,0 +1,27 @@
+[server]
+Port = "22952"
+ReadTimeoutSec = 30 # timeout for reading
+WriteTimeoutSec = 30 # response timeout
+
+DeletionOperationsLogin = "abc"
+DeletionOperationsPass = "123"
+
+[postgres]
+Conn = "postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable"
+
+MaxOpenConns = 5 # maximum number of active connections
+MaxIdleConns = 1 # maximum number of inactive connections
+
+ConnMaxIdleTimeSecond = 5 # maximum number of connections in idle connection pool
+ConnMaxLifeTimeSecond = 5 # maximum lifetime after the connection has returned to the pool
+
+QueryTimeoutSecond = 30 # timeout for queries
+
+[logger]
+AppMaxLogSizeMb = 250
+AppMaxNumOfBackups = 3
+AppMaxBackupAgeDay = 730
+
+ServerMaxLogSizeMb = 250
+ServerMaxNumOfBackups = 3
+ServerAppMaxBackupAgeDay = 730
