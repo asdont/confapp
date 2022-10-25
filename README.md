@@ -18,7 +18,7 @@ Swagger-документация - `swag init -g cmd/app/main.go`
 
 ### Postgres(таблицы, доступ)
 
-`scripts/CREATE_tables.sql`
+`scripts/create_tables.sql`
 
 авторизация - `config/conf.toml`
 
@@ -32,7 +32,7 @@ Swagger-документация - `swag init -g cmd/app/main.go`
 
 ### Docker-compose(база внутри)
 
-`docker-compose up build`
+`docker-compose build`
 
 `docker-compose up`
 
