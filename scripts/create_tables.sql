@@ -16,7 +16,7 @@ create table if not exists version
         constraint version_pk
             primary key,
     service_id integer
-        constraint config_service_service_id_fk
+        constraint version_service_service_id_fk
             references service
             on update cascade on delete cascade,
     number     integer not null,
