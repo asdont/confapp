@@ -90,21 +90,21 @@ func UpdateAllConfigs(tools *app.Tools, serviceConfigs map[int]map[string]string
 	for versionID, paramRows := range serviceConfigs {
 		for param, value := range paramRows {
 			if _, err := tx.Exec(`
-			insert into
-				config (version_id, param, value)
-			values
-				($1, $2, $3)
-			on conflict
-				(version_id, param)
-			do update
-				set value = $3
+				insert into
+					config (version_id, param, value)
+				values
+					($1, $2, $3)
+				on conflict
+					(version_id, param)
+				do update
+					set value = $3
 			`,
 				versionID,
 				param,
 				value,
 			); err != nil {
 				if errTx := tx.Rollback(); errTx != nil {
-					return fmt.Errorf("rollback in: %w: %v", err, errTx)
+					return fmt.Errorf("rollback: %w: %v", err, errTx)
 				}
 
 				return fmt.Errorf("exec: %w", err)

@@ -12,8 +12,9 @@ import (
 const defaultServiceVersion = 1
 
 func AddConfig(tools *app.Tools, serviceName string, params map[string]string) (int, error) {
-	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Second*time.Duration(tools.Conf.Postgres.QueryTimeoutSecond))
+	ctx, cancel := context.WithTimeout(
+		context.Background(), time.Second*time.Duration(tools.Conf.Postgres.QueryTimeoutSecond),
+	)
 	defer cancel()
 
 	tx, err := tools.DB.BeginTx(ctx, nil)
@@ -24,7 +25,7 @@ func AddConfig(tools *app.Tools, serviceName string, params map[string]string) (
 	serviceID, err := addServiceName(tx, serviceName)
 	if err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return 0, fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return 0, fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return 0, fmt.Errorf("add service: name: %w", err)
@@ -33,7 +34,7 @@ func AddConfig(tools *app.Tools, serviceName string, params map[string]string) (
 	versionID, err := addVersion(tx, serviceID)
 	if err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return 0, fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return 0, fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return 0, fmt.Errorf("add service: version: %w", err)
@@ -41,7 +42,7 @@ func AddConfig(tools *app.Tools, serviceName string, params map[string]string) (
 
 	if err := addConfig(tx, versionID, params); err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return 0, fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return 0, fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return 0, fmt.Errorf("add service: config: %w", err)

@@ -20,6 +20,10 @@ func UpdateConfig(tools *app.Tools, serviceName string, versionNumber int, param
 	}
 
 	if err := updateConfig(tx, serviceName, versionNumber, params); err != nil {
+		if errTx := tx.Rollback(); errTx != nil {
+			return fmt.Errorf("rollback: %w: %v", err, errTx)
+		}
+
 		return fmt.Errorf("update config: %w", err)
 	}
 

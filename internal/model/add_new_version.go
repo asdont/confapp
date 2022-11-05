@@ -22,7 +22,7 @@ func AddNewVersionConfig(tools *app.Tools, serviceName string, lastVersionNumber
 	versionID, err := addNewVersion(tx, serviceName, lastVersionNumber)
 	if err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return fmt.Errorf("add new version: %w", err)
@@ -30,7 +30,7 @@ func AddNewVersionConfig(tools *app.Tools, serviceName string, lastVersionNumber
 
 	if err := addNewConfig(tx, versionID, params); err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return fmt.Errorf("add new config: %w", err)

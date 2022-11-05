@@ -22,7 +22,7 @@ func DeleteServiceEasy(tools *app.Tools, serviceName string) error {
 	serviceID, err := deleteServiceEasy(tx, serviceName)
 	if err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return fmt.Errorf("delete service: %w", err)
@@ -30,7 +30,7 @@ func DeleteServiceEasy(tools *app.Tools, serviceName string) error {
 
 	if err := deleteVersionsEasy(tx, serviceID); err != nil {
 		if errTx := tx.Rollback(); errTx != nil {
-			return fmt.Errorf("rollback in: %w: %v", err, errTx)
+			return fmt.Errorf("rollback: %w: %v", err, errTx)
 		}
 
 		return fmt.Errorf("delete versions: %w", err)
