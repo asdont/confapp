@@ -7,7 +7,7 @@ DeletionOperationsLogin = "abc"
 DeletionOperationsPass = "123"
 
 [postgres]
-Conn = "postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable"
+Conn = "postgres://confapp:confapp@localhost/confapp?sslmode=disable"
 
 MaxOpenConns = 5 # maximum number of active connections
 MaxIdleConns = 1 # maximum number of inactive connections
